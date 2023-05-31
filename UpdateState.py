@@ -1,7 +1,10 @@
 import Window
 import pygame
+import os
 
 class State(Window.Window):
+    WHITE_BALL = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'ball_blue.png')), (100, 100))
+    BLACK_BALL = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'ball_black.png')), (100, 100))
     def drawWin(self):
         self.WIN.fill(self.WHITE)
         self.WIN.blit(self.BG, (50, 50)) 
