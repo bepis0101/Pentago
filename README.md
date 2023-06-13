@@ -24,6 +24,14 @@ Program implemenation will be in Python using PyGame module for the user interfa
 classDiagram
    Board --> Window
    Board --> Bot
+   Button --> MainMenu
+   MainMenu --> Gameplay
+   Player <--> Board
+   Board --> State
+   Window --> State
+   Player --> Gameplay
+   State --> Gameplay
+   Bot --> Gameplay
     
 class Board{
   -columns = 6
