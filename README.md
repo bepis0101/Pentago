@@ -22,35 +22,47 @@ Program implemenation will be in Python using PyGame module for the user interfa
 
 ```mermaid
 classDiagram
-    Bot --> Board
-    UserInput --> Board
-    Board --> GUI
-    UserInput --> GUI
-    Board --> Gameplay
-    GUI --> Gameplay
+   Board --> Window
+   Board --> Bot
     
 class Board{
   -columns = 6
   -rows = 6
   -board[6][6]
-  +BoardMethods()}
+  +BoardMethods()
+  }
+  
 class Bot{
   -color
   +move()
   }
-class UserInput{
-  -x
-  -y
-  -whichPart
-  +Collect()
-}
-class GUI{
-  -Board
-  -Buttons
-  +Animation()
-}
-class Gameplay{
-  -GUI
-  -GameMode
+  
+class MainMenu{
+    -buttons
+    -display
 }
 
+class Button{
+    -text
+    -position
+    -screen
+    +draw()
+}
+
+class Gameplay{
+  +Singleplayer()
+  +Multiplayer()
+}
+
+class Player{
+    +getInput()
+}
+class State{
+-WIN
++drawWin()
+}
+class Window{
+  -height
+  -width
+  -background
+  }
