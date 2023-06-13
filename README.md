@@ -22,12 +22,7 @@ Program implemenation will be in Python using PyGame module for the user interfa
 
 ```mermaid
 classDiagram
-    Bot --> Board
-    UserInput --> Board
-    Board --> GUI
-    UserInput --> GUI
-    Board --> Gameplay
-    GUI --> Gameplay
+    
     
 class Board{
   -columns = 6
@@ -38,17 +33,8 @@ class Bot{
   -color
   +move()
   }
-class UserInput{
-  -x
-  -y
-  -whichPart
-  +Collect()
-}
-class GUI{
-  -Board
-  -Buttons
-  +Animation()
-}
+
+
 class Gameplay{
   -GUI
   -GameMode
