@@ -22,6 +22,7 @@ Program implemenation will be in Python using PyGame module for the user interfa
 
 ```mermaid
 classDiagram
+   Window --> Board
    Board --> Bot
    Button --> MainMenu
    MainMenu --> Gameplay
