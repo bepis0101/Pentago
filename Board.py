@@ -1,10 +1,10 @@
 class Board:
     rows = 6
     columns = 6
-    def __init__(self):
+    def __init__(self): ## 6x6 board 
         self.board = [[0 for y in range(self.columns)] for x in range(self.rows)]
     
-    def __str__(self):
+    def __str__(self): ## for debug
         s = ""
         for i in range(self.rows):
             s += f"{self.board[i]}\n"
@@ -19,8 +19,14 @@ class Board:
     def setWhite(self, x, y):
         self.board[y][x] = 2
 
-    def turnRight(self, which):
+    def turnRight(self, which): ## 3x right --> turn left
         temp = [[0 for y in range(self.columns)] for x in range(self.rows)]
+
+        # 0 --> top left board
+        # 1 --> top right board
+        # 2 --> bottom left board
+        # 3 --> bottom right board
+        
         if(which == 0):
             for x in range(self.rows):
                 for y in range(self.columns):
@@ -33,11 +39,15 @@ class Board:
             for x in range(self.rows):
                 for y in range(self.columns):
                     temp[x][y] = self.board[y][x+3]
-        elif(which == 2):
+        elif(which == 3):
             for y in range(self.rows):
                 for x in range(self.columns):
                     temp[x][y] = self.board[y+3][x+3]
         self.board = temp
+
+    def turnLeft(self, which):
+        for _ in range(3):
+            self.turnRight(which)
 
     def checkVertical(self):
         for x in range(self.rows):

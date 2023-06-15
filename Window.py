@@ -8,9 +8,8 @@ class Window:
     BG = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'background.png')), (600, 600))
     BOARD_PNG = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'balls.png')), (300, 300))
     
-    def __init__(self, board):
+    def __init__(self):
         self.WIN = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         pygame.display.set_caption("Pentago")
-        self.board = board
     
 
