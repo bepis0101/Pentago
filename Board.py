@@ -1,3 +1,4 @@
+import copy
 class Board:
     rows = 6
     columns = 6
@@ -20,29 +21,28 @@ class Board:
         self.board[y][x] = 2
 
     def turnRight(self, which): ## 3x right --> turn left
-        temp = [[0 for y in range(self.columns)] for x in range(self.rows)]
-
+        temp = copy.deepcopy(self.board)
         # 0 --> top left board
         # 1 --> top right board
         # 2 --> bottom left board
         # 3 --> bottom right board
         
         if(which == 0):
-            for x in range(self.rows):
-                for y in range(self.columns):
-                    temp[x][y] = self.board[y][x]
+            for y in range(self.rows//2):
+                for x in range(self.columns//2):
+                    temp[x][2-y] = self.board[y][x]
         elif(which == 1):
-            for x in range(self.rows):
-                for y in range(self.columns):
-                    temp[x][y] = self.board[y+3][x]
+            for x in range(self.rows//2):
+                for y in range(self.columns//2):
+                    temp[x][5-y] = self.board[y][x+3]
         elif(which == 2):
-            for x in range(self.rows):
-                for y in range(self.columns):
-                    temp[x][y] = self.board[y][x+3]
+            for x in range(self.rows//2):
+                for y in range(self.columns//2):
+                    temp[x+3][2-y] = self.board[y+3][x]
         elif(which == 3):
-            for y in range(self.rows):
-                for x in range(self.columns):
-                    temp[x][y] = self.board[y+3][x+3]
+            for y in range(self.rows//2):
+                for x in range(self.columns//2):
+                    temp[x+3][5-y] = self.board[y+3][x+3]
         self.board = temp
 
     def turnLeft(self, which):
@@ -101,3 +101,11 @@ class Board:
             return self.checkDiagonal()
         else:
             return 0
+        
+    def count(self):
+        count = 0
+        for y in range(6):
+            for x in range(6):
+                if self.board[y][x] != 0:
+                    count += 1
+        return count

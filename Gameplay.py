@@ -9,6 +9,7 @@ class Gameplay:
         self.board = board
         # self.main_menu = main_menu
     
+
     def singlePlayer(self, player, bot):
         FPS = 60
         state = UpdateState.State()
@@ -20,10 +21,18 @@ class Gameplay:
         choose_ball = True
         choose_board = False
         choose_turn = False
+        side = ""
+        screen = state.WIN
 
         while run:
             clock.tick(FPS)
             
+            win_screen = self.board.checkWin()
+
+            if win_screen: 
+                print(win_screen)
+                run = False
+
             if player_round:
                 if choose_ball == True:
                     if clicked:
@@ -37,7 +46,9 @@ class Gameplay:
                                 self.board.setBlack(x, y)
                             choose_ball = False
                             choose_board = True
-                if choose_board:
+                            clicked = False
+                            continue
+                elif choose_board:
                     if clicked:
                         coords = player.getBoardInput()
                         x = coords[0]
@@ -49,16 +60,24 @@ class Gameplay:
                                 which_board = x
                             choose_board = False
                             choose_turn = True
-                if choose_turn:
-                    turn = player.getTurn()
-                    if turn != -1:
-                        if turn:
+                            clicked = False
+                            continue
+                elif choose_turn:
+                    if side != "":
+                        if side == "left":
                             self.board.turnLeft(which_board)
-                        else:
+                        if side == "right":
                             self.board.turnRight(which_board)
-                    choose_ball = True
-                    choose_turn = False
+                        choose_ball = True
+                        choose_turn = False
+                        player_round = False
+                        continue
+            
+            if not player_round:
+                self.board = bot.moveOfBot()
+                player_round = True
 
+            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
@@ -66,6 +85,13 @@ class Gameplay:
                     clicked = True
                 if event.type == pygame.MOUSEBUTTONUP:
                     clicked = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        side = "left"
+                    if event.key == pygame.K_RIGHT:
+                        side = "right"
+                if event.type == pygame.KEYUP:
+                    side = ""
 
 
             state.drawWin(self.board)
@@ -74,4 +100,4 @@ class Gameplay:
 
 board = Board.Board()
 Game1 = Gameplay(board)
-Game1.singlePlayer(Player.Player(board), Bot.Bot(0))
+Game1.singlePlayer(Player.Player(board), Bot.Bot(0, board))

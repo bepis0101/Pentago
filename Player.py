@@ -26,12 +26,3 @@ class Player:
                         return coords
         coords = (-1, -1)
         return coords
-    
-    def getTurn(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            return 1
-        if keys[pygame.K_RIGHT]:
-            return 0
-        else:
-            return -1
