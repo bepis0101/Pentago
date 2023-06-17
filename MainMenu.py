@@ -1,6 +1,5 @@
 import pygame
 import Window
-import Board
 
 class Button:
     pygame.font.init()
@@ -8,35 +7,30 @@ class Button:
     def __init__(self, text, pos):
         self.text = text
         self.pos = pos
-        self.button = pygame.rect.Rect((self.pos[0], self.pos[1]), (300, 50))
+        self.button = pygame.Rect((self.pos[0], self.pos[1]), (300, 50))
+        self.clicked = False
         
     
     def draw(self, screen):
+        pos = pygame.mouse.get_pos()        
+        action = False     
+        if self.button.collidepoint(pos):
+            if pygame.mouse.get_pressed()[0] and self.clicked == False:
+                self.clicked = True
+                action = True
+        
+        if not pygame.mouse.get_pressed()[0]:
+            self.clicked = False
+
         pygame.draw.rect(screen, 'light blue', self.button, 0, 5)
         pygame.draw.rect(screen, 'dark blue', self.button, 5, 5)
         text = self.font.render(self.text, True, 'black')
-        screen.blit(text, (self.pos[0]+100, self.pos[1]))
-    
+        screen.blit(text, (self.pos[0]+20, self.pos[1]+12))
+        return action
 
 class MainMenu:
     def __init__(self, screen):
-        pass
-    #     self.screen = screen
-    #     self.exit_button = 
-    # def display(self):
-
-
-        
-
-# screen = pygame.display.set_mode((700, 700))
-# pygame.display.set_caption("Button test")
-# button1 = Button("QUIT", (200, 325))
-
-# run = True
-# while run:
-#     screen.fill('light blue')
-#     button1.draw(screen)
-#     for event in pygame.event.get():
-#         if event.type == pygame.QUIT:
-#             run = False
-#     pygame.display.update()
+        x, y = screen.get_size()
+        self.exit_button = Button("EXIT", (x//2-150, y//2+75))
+        self.multi_button = Button("MULTIPLAYER", (x//2-150, y//2))
+        self.single_button = Button("SINGLEPLAYER", (x//2-150, y//2-75))
