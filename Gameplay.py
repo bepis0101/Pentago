@@ -9,10 +9,12 @@ import random
 class Gameplay:
     def __init__(self, board):
         self.board = board
-    
+
     def main(self):
+        self.board = Board.Board()
         bot_color = random.randint(0, 1)
         screen = pygame.display.set_mode((700, 700))
+        pygame.display.set_caption("Pentago")
         menu = MainMenu.MainMenu(screen)
         run = True
         while run:
@@ -27,6 +29,39 @@ class Gameplay:
                 if event.type == pygame.QUIT:
                     run = False
             pygame.display.update()
+                    
+
+    def drawText(self, screen, text, font, text_col, x, y):
+        img = font.render(text, True, text_col)
+        screen.blit(img, (x, y))
+
+    def winScreen(self, win_screen):
+        if win_screen:
+            pygame.font.init()
+            font = pygame.font.SysFont('arial', 40, True)
+            menu = False
+            run_winscreen = True
+            screen = pygame.display.set_mode((700, 700))
+            S = "MATCH WON BY "
+            if win_screen == 1:
+                S += "Black "
+            else:
+                S += "White "
+            pygame.display.set_caption(S)
+            while run_winscreen:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        run_winscreen = False
+                    if event.type == pygame.KEYDOWN:
+                        menu = True
+                    if event.type == pygame.KEYUP and menu:
+                        win_screen = 0
+                        run_winscreen = False
+                        self.main()
+            
+                self.drawText(screen, S, font, (255, 255, 255), 120, 300)
+                self.drawText(screen, "PRESS ANY KEY TO CONTINUE", font, (255, 255, 255), 120, 350)
+                pygame.display.update()
 
     def singlePlayer(self, player, bot):
         FPS = 60
@@ -34,6 +69,7 @@ class Gameplay:
         clock = pygame.time.Clock()
         clicked = False
         run_maingame = True
+        win_screen = 0
         
         if bot.color:
             player_round = False
@@ -45,6 +81,7 @@ class Gameplay:
         choose_turn = False
         side = ""
 
+
         while run_maingame:
             clock.tick(FPS)
             
@@ -52,6 +89,7 @@ class Gameplay:
 
             if win_screen and choose_ball == True: 
                 run_maingame = False
+                self.winScreen(win_screen)
 
             if player_round:
                 if choose_ball == True:
@@ -115,7 +153,9 @@ class Gameplay:
 
 
             state.drawWin(self.board)
-
+        
+        
+        
         pygame.quit()
     def multiPlayer(self, player1, player2):
         FPS = 60
@@ -137,6 +177,7 @@ class Gameplay:
 
             if win_screen and choose_ball == True: 
                 run_maingame = False
+                self.winScreen(win_screen)
 
             if player_round:
                 if choose_ball == True:
@@ -232,6 +273,5 @@ class Gameplay:
 
         pygame.quit()        
 
-board = Board.Board()
-Game1 = Gameplay(board)
+Game1 = Gameplay(Board.Board())
 Game1.main()
