@@ -1,5 +1,15 @@
 # PythonPentago
 
+## I WANT TO PLAY
+Just run the Gameplay.py file if you already have Pygame installed. Otherwise you need to use pip in your terminal and run:
+```
+pip install pygame
+```
+To run Python file use 
+```
+python3 Gameplay.py
+```
+
 ## Pentago Rules
 The object is to get five marbles in a row before your opponent does. The mind twisting part of Pentago is that each player will also twist one of the four game blocks 90 degrees (one "notch"), clockwise or counter clockwise, as part of each turn.
 
