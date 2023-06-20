@@ -22,7 +22,6 @@ Program implemenation will be in Python using PyGame module for the user interfa
 
 ```mermaid
 classDiagram
-   Window --> Board
    Board --> Bot
    Button --> MainMenu
    MainMenu --> Gameplay
@@ -32,6 +31,7 @@ classDiagram
    Player --> Gameplay
    State --> Gameplay
    Bot --> Gameplay
+   Board --> Gameplay
     
 class Board{
   -columns = 6
@@ -73,3 +73,9 @@ class Window{
   -width
   -background
   }
+```
+## Manual 
+  1. Using your mouse choose one of the following options in main menu. 
+  2. Your first move will be chosing also by mouse where to put your ball
+  3. When you see your ball on the screen choose one of four boards to rotate
+  4. Rotate your board 90 degrees left or right using arrows on your keyboard
